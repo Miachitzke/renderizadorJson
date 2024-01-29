@@ -35,7 +35,7 @@ function renderProperties(obj, container) {
 
     const propertyBox = document.createElement("div");
     propertyBox.classList.add("box");
-    propertyBox.innerHTML = `<strong>${adjustedKey}</strong> `;
+    propertyBox.innerText = `<strong>${adjustedKey}: `;
 
     if (typeof value === "object" && value !== null) {
       // Se o valor é um objeto, renderiza suas propriedades recursivamente
@@ -44,11 +44,13 @@ function renderProperties(obj, container) {
       const numMembers = Object.keys(value).length;
 
       if (numMembers > 0) {
-        propertyBox.innerHTML += `(${numMembers}): `;
-      }
-
+        propertyBox.innerHTML =
+          propertyBox.innerText.replace(":", "") + `(${numMembers}): </strong>`;
+      } 
+      
       renderProperties(value, propertyBox);
     } else {
+      propertyBox.innerText = propertyBox.innerText.replace("<strong>", "");
       propertyBox.classList.add("box-valor", "editable");
       propertyBox.contentEditable = "true";
       propertyBox.innerText += value;
